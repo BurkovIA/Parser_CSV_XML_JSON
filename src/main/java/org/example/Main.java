@@ -42,12 +42,16 @@ public class Main {
 
                 Employee employee = new Employee();
 
-                employee.setId(element.getElementsByTagName("id").item(0).getTextContent());
+                employee.setId(Long.valueOf(element.getElementsByTagName("id").item(0).getTextContent()));
                 employee.setFirstName(element.getElementsByTagName ("firstName").item(0).getTextContent());
                 employee.setLastName(element.getElementsByTagName("lastName").item(0).getTextContent());
                 employee.setCountry(element.getElementsByTagName ("country").item(0).getTextContent());
-                employee.setAge(element.getElementsByTagName ("age").item(0).getTextContent());
-                employeeList.add(employee.toString());
+                employee.setAge(Integer.parseInt(element.getElementsByTagName ("age").item(0).getTextContent()));
+                employeeList.add(String.valueOf(employee.id));
+                employeeList.add(employee.firstName);
+                employeeList.add(employee.lastName);
+                employeeList.add(employee.country);
+                employeeList.add(String.valueOf(employee.age));
 
             }
         }

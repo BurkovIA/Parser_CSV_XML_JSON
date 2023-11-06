@@ -13,8 +13,8 @@ public class Employee {
     }
 
 
-    public void setId(String id) {
-        this.id = Long.parseLong(id);
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public void setFirstName(String firstName) {
@@ -29,7 +29,9 @@ public class Employee {
         this.country = country;
     }
 
-    public void setAge(String age) {
-        this.age = Integer.parseInt(age);
+    public void setAge(int age) {
+        this.age = age;
     }
 }
+
+
