@@ -16,56 +16,38 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Main {
-
     public static void main(String[] args) throws ParserConfigurationException, IOException, SAXException {
-        List<String> list = parseXML("src/xml/data.xml");
-
+        List<Employee> list = parseXML("src/xml/data.xml");
         String json = listToJson(list);
-
         writeString(json);
     }
-    private static List<String> parseXML(String s) throws ParserConfigurationException, IOException, SAXException {
+    private static List<Employee> parseXML(String s) throws ParserConfigurationException, IOException, SAXException {
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder = factory.newDocumentBuilder();
         Document document = builder.parse(new File("src/xml/data.xml"));
         Node staff = document.getDocumentElement();
-
         NodeList nodeList = staff.getChildNodes();
-
-        List<String> employeeList = new ArrayList<>();
-
+        List<Employee> employeeList = new ArrayList<>();
         for (int i = 0; i < nodeList.getLength(); i++) {
             Node node_ = nodeList.item(i);
-
             if (Node.ELEMENT_NODE == node_.getNodeType()) {
                 Element element = (Element) node_;
-
                 Employee employee = new Employee();
-
                 employee.setId(Long.valueOf(element.getElementsByTagName("id").item(0).getTextContent()));
                 employee.setFirstName(element.getElementsByTagName ("firstName").item(0).getTextContent());
                 employee.setLastName(element.getElementsByTagName("lastName").item(0).getTextContent());
                 employee.setCountry(element.getElementsByTagName ("country").item(0).getTextContent());
                 employee.setAge(Integer.parseInt(element.getElementsByTagName ("age").item(0).getTextContent()));
-                employeeList.add(String.valueOf(employee.id));
-                employeeList.add(employee.firstName);
-                employeeList.add(employee.lastName);
-                employeeList.add(employee.country);
-                employeeList.add(String.valueOf(employee.age));
-
+                employeeList.add(employee);
             }
         }
         return employeeList;
     }
-    private static String listToJson(List<String> list) {
+    private static String listToJson(List<Employee> list) {
         Type listType = new TypeToken<List<Employee>>() {
         }.getType();
-
-        GsonBuilder builder = new GsonBuilder();
-        Gson gson = builder.create();
-
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
         String json = gson.toJson(list,listType);
-
         return json;
     }
     private static void writeString(String json) {
